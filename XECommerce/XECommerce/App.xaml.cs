@@ -21,7 +21,7 @@ namespace XECommerce
         {
             //Agregamos un inicializador de componentes
             InitializeComponent();
-            MainPage = new MasterPage();
+            MainPage = new LoginPage();
         }
         #endregion
 
