@@ -29,6 +29,8 @@ namespace XECommerce.Models
         public bool IsCustomer { get; set; }
         public bool IsSupplier { get; set; }
 
+        public bool IsRemembered { get; set; }
+        public string Password { get; set; }
         public override int GetHashCode()
         {
             return UserId;

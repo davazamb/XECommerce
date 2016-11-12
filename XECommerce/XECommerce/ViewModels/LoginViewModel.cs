@@ -6,6 +6,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Input;
+using XECommerce.Models;
 using XECommerce.Services;
 
 namespace XECommerce.ViewModels
@@ -16,6 +17,7 @@ namespace XECommerce.ViewModels
         private NavigationService navigationService; 
         private DialogService dialogService;
         private AppService appService;
+        private DataService dataService;
         private bool isRunning;
         #endregion
 
@@ -52,6 +54,7 @@ namespace XECommerce.ViewModels
             navigationService = new NavigationService();
             dialogService = new DialogService();
             appService = new AppService();
+            dataService = new DataService();
             IsRemembered = true;
         } 
         #endregion
@@ -74,14 +77,19 @@ namespace XECommerce.ViewModels
             }
             IsRunning = true;
             var response = await appService.Login(User, Password);
-            IsRunning = false;
-            
+            IsRunning = false;            
 
             if (!response.IsSuccess)
             {
                 await dialogService.ShowMessage("Error", response.Message);
                 return;
             }
+
+            var user = (User)response.Result;
+            user.IsRemembered = IsRemembered;
+            user.Password = Password;
+            dataService.InsertUser(user);
+
 
             navigationService.SetMainPage();
         }
