@@ -47,7 +47,7 @@
     <Button
       Command="{Binding LoginCommand}"
       Text="Ingresar"
-      TextColor="{StaticResource AccentColor2}"
+      TextColor="{StaticResource MainColor}"
       HorizontalOptions="Center"
       VerticalOptions="Center">
     </Button>
@@ -71,7 +71,7 @@
     </StackLayout>
     <Label
         Text="¿Has olvidado tu contraseña?"
-        TextColor="{StaticResource AccentColor2}"
+        TextColor="{StaticResource AccentColor1}"
         HorizontalOptions="Center"
         VerticalOptions="Center">
     </Label>

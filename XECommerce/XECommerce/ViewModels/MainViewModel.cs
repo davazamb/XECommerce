@@ -63,7 +63,7 @@ namespace XECommerce.ViewModels
             {
                 Icon = "ic_action_salir",
                 PageName = "LogoutPage",
-                Title = "Salir",
+                Title = "Cerrar Sesion",
             });
         } 
         #endregion

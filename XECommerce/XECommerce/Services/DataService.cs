@@ -17,6 +17,32 @@ namespace XECommerce.Services
                 return da.First<User>(true);
             }
         }
+        public Response UpdateUser(User user)
+        {
+            try
+            {
+                using (var da = new DataAccess())
+                {                   
+                    da.Update(user);
+                }
+
+                return new Response
+                {
+                    IsSuccess = true,
+                    Message = "Usuario actualizado Ok",
+                    Result = user,
+                };
+            }
+            catch (Exception ex)
+            {
+                return new Response
+                {
+                    IsSuccess = false,
+                    Message = ex.Message,
+                };
+            }
+        }
+
         public Response InsertUser(User user)
         {
             try

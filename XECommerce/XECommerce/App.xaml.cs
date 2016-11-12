@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 
 using Xamarin.Forms;
+using XECommerce.Models;
 using XECommerce.Pages;
 using XECommerce.Services;
 
@@ -19,6 +20,7 @@ namespace XECommerce
         #region Properties
         public static NavigationPage Navigator { get; internal set; }
         public static MasterPage Master { get; internal set; }
+        public static User CurrentUser { get; internal set; }
         #endregion
 
         #region Constructors
@@ -31,6 +33,7 @@ namespace XECommerce
 
             if(user != null && user.IsRemembered)
             {
+                App.CurrentUser = user;
                 MainPage = new MasterPage();
             }else
             {

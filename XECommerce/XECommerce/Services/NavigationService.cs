@@ -3,12 +3,18 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using XECommerce.Models;
 using XECommerce.Pages;
 
 namespace XECommerce.Services
 {
     public class NavigationService
     {
+        private DataService dataService;
+        public NavigationService()
+        {
+            dataService = new DataService();
+        }
         public async Task Navigate(string pageName)
         {
             App.Master.IsPresented = false;
@@ -35,11 +41,26 @@ namespace XECommerce.Services
                 case "UserPage":
                     await App.Navigator.PushAsync(new UserPage());
                     break;
+                case "LogoutPage":
+                    Logout();
+                    break;
+                default:
+                    break;
+
             }
         }
 
-        internal void SetMainPage()
+        private void Logout()
         {
+            App.CurrentUser.IsRemembered = false;
+            dataService.UpdateUser(App.CurrentUser);
+            App.Current.MainPage = new LoginPage();
+
+        }
+
+        internal void SetMainPage(User user)
+        {
+            App.CurrentUser = user;
             App.Current.MainPage = new MasterPage();
         }
     }

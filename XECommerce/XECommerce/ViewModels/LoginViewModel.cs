@@ -91,7 +91,7 @@ namespace XECommerce.ViewModels
             dataService.InsertUser(user);
 
 
-            navigationService.SetMainPage();
+            navigationService.SetMainPage(user);
         }
         #endregion
     }
