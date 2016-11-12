@@ -9,9 +9,12 @@
       <Color x:Key="MainColor">#128085</Color>
       <Color x:Key="FontColor">#385052</Color>
       <Color x:Key="MenuColor">#385052</Color>
+      <Color x:Key="MenuColor2">#FAE8CD</Color>
       <Color x:Key="MenuFontColor">#FAE8CD</Color>
-      <Color x:Key="BackgroundColor">#FAE8CD</Color>FAE8CD
+      <Color x:Key="MenuFontColor2">#385052</Color>
+      <Color x:Key="BackgroundColor">#FAE8CD</Color>
       <Color x:Key="AccentColor1">#C74029</Color>
+      <Color x:Key="AccentColor2">#F0AD44</Color>
       <!-- Locator -->
       <infra:InstanceLocator x:Key="Locator"></infra:InstanceLocator>
     </ResourceDictionary>
