@@ -43,6 +43,9 @@ namespace XECommerce.Models
 
         [ManyToOne]
         public Tax Tax { get; set; }
+        [OneToMany(CascadeOperations = CascadeOperation.All)]
+        public List<OrderDetail> OrderDetails { get; set; }
+
 
         public string ImageFullPath { get { return string.Format("http://tzecommerce.diskcode.info{0}", Image.Substring(1)); } }
 

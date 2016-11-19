@@ -34,10 +34,15 @@ namespace XECommerce.Models
         [OneToMany(CascadeOperations = CascadeOperation.All)]
         public List<CompanyCustomer> CompanyCustomers { get; set; }
 
+        [OneToMany(CascadeOperations = CascadeOperation.All)]
+        public List<Order> Orders { get; set; }
+
         public override int GetHashCode()
         {
             return CompanyId;
         }
+
+
     }
 
 }

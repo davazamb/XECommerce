@@ -24,6 +24,7 @@ namespace XECommerce.Models
         {
             return CategoryId;
         }
+
     }
 
 }

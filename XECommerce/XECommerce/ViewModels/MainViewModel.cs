@@ -1,19 +1,24 @@
-﻿using System;
+﻿using GalaSoft.MvvmLight.Command;
+using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using System.ComponentModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows.Input;
 using XECommerce.Models;
 using XECommerce.Services;
 
 namespace XECommerce.ViewModels
 {
-    public class MainViewModel
+    public class MainViewModel : INotifyPropertyChanged
     {
         #region Attributes
         private DataService dataService;
         private AppService appService;
+        private NetService netService;
+        private string filter;
         #endregion
 
         #region Properties
@@ -21,6 +26,32 @@ namespace XECommerce.ViewModels
         public ObservableCollection<ProductItemViewModel> Products { get; set; }
         public LoginViewModel NewLogin { get; set; }
         public UserViewModel UserLoged { get; set; }
+        public string Filter
+        { 
+        set
+            {
+                if (filter != value)
+                {
+                    filter = value;
+
+                    if (PropertyChanged != null)
+                    {
+                        PropertyChanged(this, new PropertyChangedEventArgs("Quantity"));
+                        if(string.IsNullOrEmpty(filter))
+                        {
+                            LoadLocalProducts();
+                        }
+                    }
+}
+            }
+            get
+            {
+                return filter;
+            }
+        }
+
+
+
         #endregion
 
         #region Constructors
@@ -37,6 +68,7 @@ namespace XECommerce.ViewModels
             //Instance services
             dataService = new DataService();
             appService = new AppService();
+            netService = new NetService();
             //Load data
             LoadMenu();
             LoadProducts();
@@ -50,6 +82,7 @@ namespace XECommerce.ViewModels
 
         private static MainViewModel instance;
 
+
         public static MainViewModel GetInstance()
         {
             if (instance == null)
@@ -62,10 +95,66 @@ namespace XECommerce.ViewModels
 
         #endregion
 
+        #region Events
+        public event PropertyChangedEventHandler PropertyChanged; 
+        #endregion
+
+        #region Commands
+        public ICommand SearchProductCommand { get { return new RelayCommand(SearchProduct); } }
+
+        private void SearchProduct()
+        {
+            var products = dataService.GetProducts(Filter);
+            Products.Clear();
+            foreach (var product in products)
+            {
+                Products.Add(new ProductItemViewModel
+                {
+                    BarCode = product.BarCode,
+                    Category = product.Category,
+                    CategoryId = product.CategoryId,
+                    Company = product.Company,
+                    CompanyId = product.CompanyId,
+                    Description = product.Description,
+                    Image = product.Image,
+                    Inventories = product.Inventories,
+                    Price = product.Price,
+                    ProductId = product.ProductId,
+                    Remarks = product.Remarks,
+                    Stock = product.Stock,
+                    Tax = product.Tax,
+                    TaxId = product.TaxId,
+                });
+            }
+        }
+
+        #endregion
+
         #region Methods
+        private void LoadLocalProducts()
+        {
+            var products = dataService.GetProducts();
+            ReloadProducts(products);
+
+        }
         private async void LoadProducts()
         {
-            var products = await appService.GetProducts();
+            var products = new List<Product>();
+            if (netService.IsConnected())
+            {
+                products = await appService.GetProducts();
+                dataService.SaveProducts(products);
+            }
+            else
+            {
+                products = dataService.GetProducts();
+            }
+            ReloadProducts(products);
+
+        }
+
+        private void ReloadProducts(List<Product> products)
+        {
             Products.Clear();
             foreach (var product in products)
             {
@@ -88,6 +177,7 @@ namespace XECommerce.ViewModels
                 });
             }
         }
+
         public void LoadUser(User user)
         {
             UserLoged.FullName = user.FullName;

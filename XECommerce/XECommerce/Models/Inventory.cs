@@ -28,6 +28,7 @@ namespace XECommerce.Models
         {
             return InventoryId;
         }
+
     }
 
 }

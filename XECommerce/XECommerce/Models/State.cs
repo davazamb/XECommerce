@@ -8,26 +8,20 @@ using System.Threading.Tasks;
 
 namespace XECommerce.Models
 {
-    public class City
+    public class State
     {
         [PrimaryKey]
-        public int CityId { get; set; }
+        public int StateId { get; set; }
 
-        public string Name { get; set; }
-
-        public int DepartmentId { get; set; }
-
-        [ManyToOne]
-        public Department Department { get; set; }
+        public string Description { get; set; }
 
         [OneToMany(CascadeOperations = CascadeOperation.All)]
-        public List<Customer> Customers { get; set; }
+        public List<Order> Orders { get; set; }
 
         public override int GetHashCode()
         {
-            return CityId;
+            return StateId;
         }
-
     }
-
 }
+

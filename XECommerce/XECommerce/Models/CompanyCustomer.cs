@@ -27,6 +27,7 @@ namespace XECommerce.Models
         {
             return CompanyCustomerId;
         }
+
     }
 
 }

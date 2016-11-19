@@ -18,6 +18,8 @@ namespace XECommerce.ViewModels
         private DialogService dialogService;
         private AppService appService;
         private DataService dataService;
+        private NetService netService;
+
         private bool isRunning;
         #endregion
 
@@ -55,6 +57,7 @@ namespace XECommerce.ViewModels
             dialogService = new DialogService();
             appService = new AppService();
             dataService = new DataService();
+            netService = new NetService();
             IsRemembered = true;
         } 
         #endregion
@@ -76,7 +79,17 @@ namespace XECommerce.ViewModels
                 return;
             }
             IsRunning = true;
-            var response = await appService.Login(User, Password);
+            var response = new Response();
+            if(netService.IsConnected())
+            {
+                response = await appService.Login(User, Password);
+
+            }
+            else
+            {
+                response =  dataService.Login(User, Password);
+
+            }
             IsRunning = false;            
 
             if (!response.IsSuccess)
