@@ -20,6 +20,17 @@ namespace XECommerce.Data
             connection = new SQLiteConnection(config.Platform,
                 System.IO.Path.Combine(config.DirectoryDB, "XECommerce6.db3"));
             connection.CreateTable<Company>();
+            connection.CreateTable<Category>();
+            connection.CreateTable<City>();
+            connection.CreateTable<Company>();
+            connection.CreateTable<CompanyCustomer>();
+            connection.CreateTable<Customer>();
+            connection.CreateTable<Department>();
+            connection.CreateTable<Inventory>();
+            connection.CreateTable<Order>();
+            connection.CreateTable<Product>();
+            connection.CreateTable<Sale>();
+            connection.CreateTable<Tax>();
             connection.CreateTable<User>();
         }
 
