@@ -31,6 +31,9 @@ namespace XECommerce.Models
 
         public bool IsRemembered { get; set; }
         public string Password { get; set; }
+
+        public string FullName { get { return string.Format("{0} {1}", FirstName, LastName); } }
+        public string PhotoFullPath { get { return string.Format("http://tzecommerce.diskcode.info{0}", Photo.Substring(1)); } }
         public override int GetHashCode()
         {
             return UserId;

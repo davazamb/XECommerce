@@ -88,9 +88,8 @@ namespace XECommerce.ViewModels
             var user = (User)response.Result;
             user.IsRemembered = IsRemembered;
             user.Password = Password;
+            
             dataService.InsertUser(user);
-
-
             navigationService.SetMainPage(user);
         }
         #endregion

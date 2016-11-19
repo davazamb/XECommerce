@@ -4,27 +4,63 @@ using System.Collections.ObjectModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using XECommerce.Models;
+using XECommerce.Services;
 
 namespace XECommerce.ViewModels
 {
     public class MainViewModel
     {
+        #region Attributes
+        private DataService dataService;
+        #endregion
 
         #region Properties
         public ObservableCollection<MenuItemViewModel> Menu { get; set; }
         public LoginViewModel NewLogin { get; set; }
+        public UserViewModel UserLoged { get; set; }
         #endregion
 
         #region Constructors
         public MainViewModel()
         {
+            //Singleton
+            instance = this;
+            //Create observable colletions
             Menu = new ObservableCollection<MenuItemViewModel>();
+            //Create views
             NewLogin = new LoginViewModel();
+            UserLoged = new UserViewModel();
+            //Instance services
+            dataService = new DataService();
+            //Load data
             LoadMenu();
         }
+
+        #endregion
+
+        #region Singleton
+
+        private static MainViewModel instance;
+
+        public static MainViewModel GetInstance()
+        {
+            if (instance == null)
+            {
+                instance = new MainViewModel();
+            }
+
+            return instance;
+        }
+
         #endregion
 
         #region Methods
+        public void LoadUser(User user)
+        {
+            UserLoged.FullName = user.FullName;
+            UserLoged.Photo = user.PhotoFullPath;
+        }
         private void LoadMenu()
         {
             Menu = new ObservableCollection<MenuItemViewModel>();

@@ -5,6 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using XECommerce.Models;
 using XECommerce.Pages;
+using XECommerce.ViewModels;
 
 namespace XECommerce.Services
 {
@@ -50,7 +51,12 @@ namespace XECommerce.Services
             }
         }
 
-        private void Logout()
+        //public User GetCurrentUser()
+        //{
+        //    return App.CurrentUser;
+        //}
+
+        private void Logout() 
         {
             App.CurrentUser.IsRemembered = false;
             dataService.UpdateUser(App.CurrentUser);
@@ -60,6 +66,9 @@ namespace XECommerce.Services
 
         internal void SetMainPage(User user)
         {
+            var mainViewModel = MainViewModel.GetInstance();
+            mainViewModel.LoadUser(user);
+
             App.CurrentUser = user;
             App.Current.MainPage = new MasterPage();
         }

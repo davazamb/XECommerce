@@ -7,6 +7,7 @@ using Xamarin.Forms;
 using XECommerce.Models;
 using XECommerce.Pages;
 using XECommerce.Services;
+using XECommerce.ViewModels;
 
 namespace XECommerce
 {
@@ -28,11 +29,15 @@ namespace XECommerce
         {
             //Agregamos un inicializador de componentes
             InitializeComponent();
+
+            //Modo remember
             dataService = new DataService();
             var user = dataService.GetUser();
 
-            if(user != null && user.IsRemembered)
+            if (user != null && user.IsRemembered)
             {
+                var mainViewModel = MainViewModel.GetInstance();
+                mainViewModel.LoadUser(user); 
                 App.CurrentUser = user;
                 MainPage = new MasterPage();
             }else
