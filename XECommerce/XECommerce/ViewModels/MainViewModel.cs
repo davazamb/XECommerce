@@ -13,10 +13,12 @@ namespace XECommerce.ViewModels
     {
         #region Attributes
         private DataService dataService;
+        private AppService appService;
         #endregion
 
         #region Properties
         public ObservableCollection<MenuItemViewModel> Menu { get; set; }
+        public ObservableCollection<ProductItemViewModel> Products { get; set; }
         public LoginViewModel NewLogin { get; set; }
         public UserViewModel UserLoged { get; set; }
         #endregion
@@ -28,14 +30,19 @@ namespace XECommerce.ViewModels
             instance = this;
             //Create observable colletions
             Menu = new ObservableCollection<MenuItemViewModel>();
+            Products = new ObservableCollection<ProductItemViewModel>();
             //Create views
             NewLogin = new LoginViewModel();
             UserLoged = new UserViewModel();
             //Instance services
             dataService = new DataService();
+            appService = new AppService();
             //Load data
             LoadMenu();
+            LoadProducts();
         }
+
+
 
         #endregion
 
@@ -56,6 +63,31 @@ namespace XECommerce.ViewModels
         #endregion
 
         #region Methods
+        private async void LoadProducts()
+        {
+            var products = await appService.GetProducts();
+            Products.Clear();
+            foreach (var product in products)
+            {
+                Products.Add(new ProductItemViewModel
+                {
+                    BarCode = product.BarCode,
+                    Category = product.Category,
+                    CategoryId = product.CategoryId,
+                    Company = product.Company,
+                    CompanyId = product.CompanyId,
+                    Description = product.Description,
+                    Image = product.Image,
+                    Inventories = product.Inventories,
+                    Price = product.Price,
+                    ProductId = product.ProductId,
+                    Remarks = product.Remarks,
+                    Stock = product.Stock,
+                    Tax = product.Tax,
+                    TaxId = product.TaxId
+                });
+            }
+        }
         public void LoadUser(User user)
         {
             UserLoged.FullName = user.FullName;

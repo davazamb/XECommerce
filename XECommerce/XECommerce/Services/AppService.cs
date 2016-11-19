@@ -55,6 +55,30 @@ namespace XECommerce.Services
                     Message = ex.Message,                
                 };
             }
-        }       
+        }
+
+        public async Task<List<Product>> GetProducts()
+        {
+            try
+            {
+                var client = new HttpClient();
+                client.BaseAddress = new Uri("http://tzecommerce.diskcode.info");
+                var url = "/api/Products";
+                var response = await client.GetAsync(url);
+
+                if (!response.IsSuccessStatusCode)
+                {
+                    return null;
+                }
+                // se deserializa la respuesta json
+                var result = await response.Content.ReadAsStringAsync();
+                var products = JsonConvert.DeserializeObject<List<Product>>(result);
+                return products;
+            }
+            catch
+            {
+                return null;
+            }
+        }
     }
 }
