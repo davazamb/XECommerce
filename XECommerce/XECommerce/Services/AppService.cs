@@ -81,6 +81,30 @@ namespace XECommerce.Services
         //    }
         //}
 
+        public async Task<List<Department>> GetDepartments()
+        {
+            try
+            {
+                var client = new HttpClient();
+                client.BaseAddress = new Uri("http://tzecommerce.diskcode.info");
+                var url = "/api/Departaments";
+                var response = await client.GetAsync(url);
+
+                if (!response.IsSuccessStatusCode)
+                {
+                    return null;
+                }
+                // se deserializa la respuesta json
+                var result = await response.Content.ReadAsStringAsync();
+                var departaments = JsonConvert.DeserializeObject<List<Department>>(result);
+                return departaments.OrderBy(d => d.Name).ToList();
+            }
+            catch
+            {
+                return null;
+            }
+        }
+
         public async Task<List<T>> Get<T>(string controller)
         {
             try

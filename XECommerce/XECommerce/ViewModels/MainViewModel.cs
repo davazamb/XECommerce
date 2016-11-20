@@ -28,6 +28,8 @@ namespace XECommerce.ViewModels
         public ObservableCollection<CustomerItemViewModel> Customers { get; set; }
         public LoginViewModel NewLogin { get; set; }
         public UserViewModel UserLoged { get; set; }
+        public CustomerItemViewModel CurrentCustomer { get; set; }
+
         public string ProductsFilter
         { 
         set
@@ -47,6 +49,9 @@ namespace XECommerce.ViewModels
                 return productsFilter;
             }
         }
+
+
+
         public string CustomersFilter
         {
             set
@@ -84,6 +89,7 @@ namespace XECommerce.ViewModels
             //Create views
             NewLogin = new LoginViewModel();
             UserLoged = new UserViewModel();
+            CurrentCustomer = new CustomerItemViewModel();
             //Instance services
             dataService = new DataService();
             appService = new AppService();
@@ -136,9 +142,15 @@ namespace XECommerce.ViewModels
             ReloadCustomers(customers);
         }
 
+
+
         #endregion
 
         #region Methods
+        public void SetCurrentCustomer(CustomerItemViewModel customerItemViewModel)
+        {
+            CurrentCustomer = customerItemViewModel;
+        }
         private void LoadLocalCustomers()
         {
             var customers = dataService.Get<Customer>(true);
@@ -172,7 +184,7 @@ namespace XECommerce.ViewModels
                     CompanyCustomers = customer.CompanyCustomers,
                     CustomerId = customer.CustomerId,
                     Department = customer.Department,
-                    DepartmentId = customer.DepartmentId,
+                    DepartamentId = customer.DepartamentId,
                     FirstName = customer.FirstName,
                     IsUpdated = customer.IsUpdated,
                     LastName = customer.LastName,
@@ -182,8 +194,8 @@ namespace XECommerce.ViewModels
                     Phone = customer.Phone,
                     Photo = customer.Photo,
                     Sales = customer.Sales,
-                    UserName = customer.UserName
-
+                    UserName = customer.UserName,
+                   
                 });
             }
         }

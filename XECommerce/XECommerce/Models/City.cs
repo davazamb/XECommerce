@@ -15,7 +15,7 @@ namespace XECommerce.Models
 
         public string Name { get; set; }
 
-        public int DepartmentId { get; set; }
+        public int DepartamentId { get; set; }
 
         [ManyToOne]
         public Department Department { get; set; }

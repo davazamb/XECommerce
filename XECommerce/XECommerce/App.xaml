@@ -19,7 +19,7 @@
       <!--DataTemplate-->
       <DataTemplate x:Key="ProductItemTemplate">
         <ViewCell>
-          <Grid Padding="8">
+          <Grid>
             <Grid.ColumnDefinitions>
               <ColumnDefinition Width="Auto"></ColumnDefinition>
               <ColumnDefinition Width="*"></ColumnDefinition>
@@ -49,7 +49,10 @@
       </DataTemplate>
       <DataTemplate x:Key="CustomerItemTemplate">
         <ViewCell>
-          <Grid Padding="8">
+          <Grid>
+            <Grid.GestureRecognizers>
+              <TapGestureRecognizer Command="{Binding CustomerDetailCommand}"/>
+            </Grid.GestureRecognizers>
             <Grid.ColumnDefinitions>
               <ColumnDefinition Width="Auto"></ColumnDefinition>
               <ColumnDefinition Width="*"></ColumnDefinition>

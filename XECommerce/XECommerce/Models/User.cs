@@ -22,6 +22,8 @@ namespace XECommerce.Models
         public string DepartamentName { get; set; }
         public int CityId { get; set; }
         public string CityName { get; set; }
+        //Para evitar error de fereignkey
+        [ForeignKey(typeof(Company))]     
         [ManyToOne]
         public Company Company { get; set; }
         public bool IsAdmin { get; set; }

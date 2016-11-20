@@ -21,7 +21,7 @@ namespace XECommerce.Models
 
         public string Logo { get; set; }
 
-        public int DepartmentId { get; set; }
+        public int DepartamentId { get; set; }
 
         public int CityId { get; set; }
 

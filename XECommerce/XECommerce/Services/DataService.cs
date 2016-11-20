@@ -109,6 +109,14 @@ namespace XECommerce.Services
         //    }
         //}
 
+        public List<Department> GetDepartments()
+        {
+            using (var da = new DataAccess())
+            {
+                return da.GetList<Department>(true).OrderBy(d => d.Name).ToList();
+            }
+        }
+
         public Response Login(string email, string password)
         {
             try

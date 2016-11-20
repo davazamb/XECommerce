@@ -11,7 +11,7 @@ namespace XECommerce.Models
     public class Department
     {
         [PrimaryKey]
-        public int DepartmentId { get; set; }
+        public int DepartamentId { get; set; }
 
         public string Name { get; set; }
 
@@ -23,7 +23,7 @@ namespace XECommerce.Models
 
         public override int GetHashCode()
         {
-            return DepartmentId;
+            return DepartamentId;
         }
 
     }
