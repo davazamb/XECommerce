@@ -116,6 +116,13 @@ namespace XECommerce.Services
                 return da.GetList<Department>(true).OrderBy(d => d.Name).ToList();
             }
         }
+        public List<City> GetCities()
+        {
+            using (var da = new DataAccess())
+            {
+                return da.GetList<City>(true).OrderBy(d => d.Name).ToList();
+            }
+        }
 
         public Response Login(string email, string password)
         {

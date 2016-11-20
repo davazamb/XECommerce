@@ -104,6 +104,29 @@ namespace XECommerce.Services
                 return null;
             }
         }
+        public async Task<List<City>> GetCities()
+        {
+            try
+            {
+                var client = new HttpClient();
+                client.BaseAddress = new Uri("http://tzecommerce.diskcode.info");
+                var url = "/api/Cities";
+                var response = await client.GetAsync(url);
+
+                if (!response.IsSuccessStatusCode)
+                {
+                    return null;
+                }
+                // se deserializa la respuesta json
+                var result = await response.Content.ReadAsStringAsync();
+                var cities = JsonConvert.DeserializeObject<List<City>>(result);
+                return cities.OrderBy(c => c.Name).ToList();
+            }
+            catch
+            {
+                return null;
+            }
+        }
 
         public async Task<List<T>> Get<T>(string controller)
         {

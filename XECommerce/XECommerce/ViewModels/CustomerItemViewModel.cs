@@ -22,6 +22,7 @@ namespace XECommerce.ViewModels
         #endregion
         #region Properties
         public ObservableCollection<DepartmentItemViewModel> Departments { get; set; }
+        public ObservableCollection<CityItemViewModel> Cities { get; set; }
         #endregion
 
         #region Contructors
@@ -35,9 +36,13 @@ namespace XECommerce.ViewModels
 
             //Observable collection
             Departments = new ObservableCollection<DepartmentItemViewModel>();
+            Cities = new ObservableCollection<CityItemViewModel>();
             //LoadData
             LoadDepartments();
+            LoadCities();
         }
+
+
 
 
         #endregion
@@ -75,6 +80,36 @@ namespace XECommerce.ViewModels
         #endregion
 
         #region Methods
+        private async void LoadCities()
+        {
+            var cities = new List<City>();
+            if (netService.IsConnected())
+            {
+                cities = await appService.GetCities();
+                dataService.Save(cities);
+            }
+            else
+            {
+                cities = dataService.GetCities();
+            }
+            ReloadCities(cities);
+        }
+
+        private void ReloadCities(List<City> cities)
+        {
+            Cities.Clear();
+            foreach (var city in cities.OrderBy(c => c.Name))
+            {
+                Cities.Add(new CityItemViewModel
+                {
+                    CityId = city.CityId,
+                    Customers = city.Customers,
+                    DepartamentId = city.DepartamentId,
+                    Department = city.Department,
+                    Name = city.Name
+                });
+            }
+        }
         private async void LoadDepartments()
         {
             var departments = new List<Department>();
