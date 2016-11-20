@@ -74,40 +74,40 @@ namespace XECommerce.Services
             }
         }
 
-        public void SaveProducts(List<Product> products)
-        {
-            using (var da = new DataAccess())
-            {
-                var oldProducts = da.GetList<Product>(false);
-                foreach (var product in oldProducts)
-                {
-                    da.Delete(product);
-                }
-                foreach (var product in products)
-                {
-                    da.Insert(product);
-                }
-            }
-        }
+        //public void SaveProducts(List<Product> products)
+        //{
+        //    using (var da = new DataAccess())
+        //    {
+        //        var oldProducts = da.GetList<Product>(false);
+        //        foreach (var product in oldProducts)
+        //        {
+        //            da.Delete(product);
+        //        }
+        //        foreach (var product in products)
+        //        {
+        //            da.Insert(product);
+        //        }
+        //    }
+        //}
 
-        public List<Product> GetProducts(string filter)
+        public List<Product> GetProducts(string productsFilter)
         {
             using (var da = new DataAccess())
             {
                 return da.GetList<Product>(true)
                     .OrderBy(p => p.Description)
-                    .Where(p => p.Description.ToUpper().Contains(filter.ToUpper()))
+                    .Where(p => p.Description.ToUpper().Contains(productsFilter.ToUpper()))
                     .ToList();
             }
         }
 
-        public List<Product> GetProducts()
-        {
-            using (var da = new DataAccess())
-            {
-                return da.GetList<Product>(true).OrderBy(p => p.Description).ToList();
-            }
-        }
+        //public List<Product> GetProducts()
+        //{
+        //    using (var da = new DataAccess())
+        //    {
+        //        return da.GetList<Product>(true).OrderBy(p => p.Description).ToList();
+        //    }
+        //}
 
         public Response Login(string email, string password)
         {
@@ -147,6 +147,41 @@ namespace XECommerce.Services
                     IsSuccess = false,
                     Message = ex.Message,
                 };
+            }
+        }
+
+        public List<Customer> GetCustomers(string customersFilter)
+        {
+            using (var da = new DataAccess())
+            {
+                return da.GetList<Customer>(true)
+                    .OrderBy(c => c.FirstName).ThenBy(c => c.LastName)
+                    .Where(c => c.FirstName.ToUpper().Contains(customersFilter.ToUpper()) ||
+                    c.LastName.ToUpper().Contains(customersFilter.ToUpper())).ToList();
+            }
+        }
+
+        public List<T> Get<T>(bool withChildren) where T : class
+        {
+            using (var da = new DataAccess())
+            {
+                return da.GetList<T>(withChildren).ToList();
+            }
+        }
+
+        public void Save<T>(List<T> list) where T :class
+        {
+            using (var da = new DataAccess())
+            {
+                var oldRecords = da.GetList<T>(false);
+                foreach (var record in oldRecords)
+                {
+                    da.Delete(record);
+                }
+                foreach (var record in list)
+                {
+                    da.Insert(record);
+                }
             }
         }
     }

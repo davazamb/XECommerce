@@ -57,13 +57,37 @@ namespace XECommerce.Services
             }
         }
 
-        public async Task<List<Product>> GetProducts()
+        //public async Task<List<Product>> GetProducts()
+        //{
+        //    try
+        //    {
+        //        var client = new HttpClient();
+        //        client.BaseAddress = new Uri("http://tzecommerce.diskcode.info");
+        //        var url = "/api/Products";
+        //        var response = await client.GetAsync(url);
+
+        //        if (!response.IsSuccessStatusCode)
+        //        {
+        //            return null;
+        //        }
+        //        // se deserializa la respuesta json
+        //        var result = await response.Content.ReadAsStringAsync();
+        //        var products = JsonConvert.DeserializeObject<List<Product>>(result);
+        //        return products.OrderBy(p => p.Description).ToList();
+        //    }
+        //    catch
+        //    {
+        //        return null;
+        //    }
+        //}
+
+        public async Task<List<T>> Get<T>(string controller)
         {
             try
             {
                 var client = new HttpClient();
                 client.BaseAddress = new Uri("http://tzecommerce.diskcode.info");
-                var url = "/api/Products";
+                var url = string.Format( "/api/{0}", controller);
                 var response = await client.GetAsync(url);
 
                 if (!response.IsSuccessStatusCode)
@@ -72,8 +96,8 @@ namespace XECommerce.Services
                 }
                 // se deserializa la respuesta json
                 var result = await response.Content.ReadAsStringAsync();
-                var products = JsonConvert.DeserializeObject<List<Product>>(result);
-                return products.OrderBy(p => p.Description).ToList();
+                var list = JsonConvert.DeserializeObject<List<T>>(result);
+                return list;
             }
             catch
             {

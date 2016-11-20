@@ -18,7 +18,7 @@ namespace XECommerce.Data
         {
             var config = DependencyService.Get<IConfig>();
             connection = new SQLiteConnection(config.Platform,
-                System.IO.Path.Combine(config.DirectoryDB, "ECommerceApp2.db3"));
+                System.IO.Path.Combine(config.DirectoryDB, "ECommerceApp11.db3"));
             connection.CreateTable<Category>();
             connection.CreateTable<City>();
             connection.CreateTable<Company>();
